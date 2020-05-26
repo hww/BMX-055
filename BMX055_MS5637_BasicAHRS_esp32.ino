@@ -392,6 +392,11 @@ void setup()
         Serial.println(magBias[0]);
         Serial.println(magBias[1]);
         Serial.println(magBias[2]);
+        if (SerialStream)
+        {
+            Serial.println();
+            Serial.println("pitch,yaw,roll,rate");
+        }
         isBoot = false;
     } else {
         Serial.print("Could not connect to BMX055: 0x");
@@ -499,21 +504,20 @@ void loop() {
         //
 
         if (SerialDebug) {
-            Serial.print("Yaw, Pitch, Roll: ");
-            Serial.print(yaw, 2);
-            Serial.print(", ");
+            Serial.print("Pitch, Yaw, Roll, Rate(Hz): ");
             Serial.print(pitch, 2);
             Serial.print(", ");
-            Serial.println(roll, 2);
-            Serial.print("rate = ");
-            Serial.print((float)sumCount / sum, 2);
-            Serial.println(" Hz");
+            Serial.print(yaw, 2);
+            Serial.print(", ");
+            Serial.print(roll, 2);
+            Serial.print(", ");
+            Serial.println((float)sumCount / sum, 2);
         }
         if (SerialStream)
         {
-            Serial.print(yaw, 2);
-            Serial.print(",   ");
             Serial.print(pitch, 2);
+            Serial.print(",   ");
+            Serial.print(yaw, 2);
             Serial.print(",   ");
             Serial.print(roll, 2);
             Serial.print(",   ");
@@ -934,7 +938,7 @@ void writeByte(uint8_t address, uint8_t subAddress, uint8_t data)
 {
     if (SerialLogI2C && isBoot)
     {
-        Serial.printf("[I2C] addr: %02x reg: %02x data: %02x\n",address, subAddress, data);
+        Serial.printf("[I2C] slave: %0x02x reg: 0x%02x data: 0x%02x\n",address, subAddress, data);
     }
     Wire.beginTransmission(address);  // Initialize the Tx buffer
     Wire.write(subAddress);           // Put slave register address in Tx buffer

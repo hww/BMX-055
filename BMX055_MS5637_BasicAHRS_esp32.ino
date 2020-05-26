@@ -27,8 +27,10 @@
 #include "Wire.h"
 #include <SPI.h>
 
+#define SerialBaudRate 115200
 #define SerialDebug false  // set to true to get serial output friendly for human
 #define SerialStream true  // set to true to get output friendly to serial plotter
+#define SerialLogI2C true  // set true will log writing to sensor at the boot 
 
 // Set the I2C pins
 #define ESP32_SDA 19
@@ -316,13 +318,18 @@ float ax, ay, az, gx, gy, gz, mx, my, mz; // variables to hold latest sensor dat
 float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};    // vector to hold quaternion
 float eInt[3] = {0.0f, 0.0f, 0.0f};       // vector to hold integral error for Mahony method
 
+bool isBoot;
+
 // =============================================================================
+// Initialization
 // =============================================================================
 
-void setup() {
+void setup() 
+{
+    isBoot = true;
     Wire.begin(ESP32_SDA, ESP32_SCL);
     delay(5000);
-    Serial.begin(115200);
+    Serial.begin(SerialBaudRate);
     // Set up the interrupt pin, its set as active high, push-pull
     pinMode(intACC1,  INPUT);
     pinMode(intACC2,  INPUT);
@@ -385,6 +392,7 @@ void setup() {
         Serial.println(magBias[0]);
         Serial.println(magBias[1]);
         Serial.println(magBias[2]);
+        isBoot = false;
     } else {
         Serial.print("Could not connect to BMX055: 0x");
         Serial.println(c, HEX);
@@ -924,6 +932,10 @@ void magcalBMX055(float* dest1) {
 
 void writeByte(uint8_t address, uint8_t subAddress, uint8_t data)
 {
+    if (SerialLogI2C && isBoot)
+    {
+        Serial.printf("[I2C] addr: %02x reg: %02x data: %02x\n",address, subAddress, data);
+    }
     Wire.beginTransmission(address);  // Initialize the Tx buffer
     Wire.write(subAddress);           // Put slave register address in Tx buffer
     Wire.write(data);                 // Put data in Tx buffer

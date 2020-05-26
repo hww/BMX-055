@@ -1,0 +1,17 @@
+[I2C] addr: 11 reg: 4b data: 01
+[I2C] addr: 19 reg: 14 data: b6
+[I2C] addr: 19 reg: 0f data: 03
+[I2C] addr: 19 reg: 10 data: 09
+[I2C] addr: 19 reg: 13 data: 00
+[I2C] addr: 69 reg: 0f data: 04
+[I2C] addr: 69 reg: 10 data: 04
+[I2C] addr: 11 reg: 4b data: 82
+[I2C] addr: 11 reg: 4b data: 01
+[I2C] addr: 11 reg: 4c data: 00
+[I2C] addr: 11 reg: 51 data: 04
+[I2C] addr: 11 reg: 52 data: 16
+[I2C] addr: 19 reg: 36 data: 80
+[I2C] addr: 19 reg: 37 data: 20
+[I2C] addr: 19 reg: 36 data: 20
+[I2C] addr: 19 reg: 36 data: 40
+[I2C] addr: 19 reg: 36 data: 60

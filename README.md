@@ -1,7 +1,7 @@
 BMX-055
 =======
 
-Version for ESP32-WROOM and eliminated display and pressure meters
+Forked form [](https://github.com/kriswiner/BMX-055), but my version adopted for for ESP32-WROOM and does not have extra components such as display and pressure meters.
 
 ![](https://cloud.githubusercontent.com/assets/6698410/4963527/160e313e-671a-11e4-9a54-a20686bb20cb.jpg)
 
